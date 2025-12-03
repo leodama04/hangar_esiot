@@ -1,6 +1,8 @@
 #ifndef __TIMER__
 #define __TIMER__
 
+extern volatile bool timerFlag;
+
 class Timer {
     
 public:  

@@ -1,7 +1,5 @@
 #include "Scheduler.h"
-
-volatile bool timerFlag;
-
+ 
 void timerHandler(void){
   timerFlag = true;
 }

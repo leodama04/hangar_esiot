@@ -1,12 +1,21 @@
 #include <Arduino.h>
 #include "Scheduler.h"
+#include "global.h"
+#include "tasks/TakeOffTask.h"
 
-Scheduler sched;
+Scheduler scheduler;
+TakeOffTask takeOffTask;
 
 void setup() {
-  sched.init(100);
+  globalSetup();
+  takeOffTask.init(200);
+  scheduler.init(200);
+  scheduler.addTask(&takeOffTask);
+  delay(100);
+  MsgService.sendMsg("READY");
 }
 
 void loop() {
-  sched.schedule();
+  scheduler.schedule();
 }
+
