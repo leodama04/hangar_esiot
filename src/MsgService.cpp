@@ -28,6 +28,9 @@ void MsgServiceClass::init(){
   content = "";
   currentMsg = NULL;
   msgAvailable = false;  
+
+  delay(100);
+  MsgService.sendMsg("READY");
 }
 
 void MsgServiceClass::sendMsg(const String& msg){
@@ -83,8 +86,11 @@ void MsgServiceClass::sendMsgRESET() {
   Serial.println("RESET");
 }
 
-enum Command { CMD_TAKEOFF, CMD_LAND, CMD_UNKNOWN };
+void MsgServiceClass::sendDistance(float dist) {
+  Serial.println("DISTANCE: " + String(dist));
+}
 
+enum Command { CMD_TAKEOFF, CMD_LAND, CMD_UNKNOWN };
 
 static Command parseCommand(String content){
   if (content == "takeoff") return CMD_TAKEOFF;
@@ -97,9 +103,6 @@ void MsgServiceClass::handleMessage() {
     Msg* m = MsgService.receiveMsg();
     if (m == NULL) return;
     String content = m->getContent();
-    // normalize to lower
-    for (unsigned int i=0;i<content.length();i++) content[i] = tolower(content[i]);
-    // parse into enum then switch
     Command cmd = parseCommand(content);
     switch(cmd){
       case CMD_TAKEOFF:

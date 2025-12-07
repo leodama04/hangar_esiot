@@ -10,8 +10,10 @@ public:
   virtual void tick();
 
 private:
-  enum State { WAITING_MSG, WAITING_DOOR_TO_OPEN, WAITING_DRONE_TO_EXIT, WAITING_DOOR_TO_CLOSE};
+  enum State { WAITING_MSG, WAITING_DOOR_TO_OPEN, WAITING_DRONE_TO_EXIT, WAITING_TO_CLOSE_DOOR, WAITING_DOOR_TO_CLOSE};
   State state;
+  unsigned long tStart;
+  bool timerRunning;
 };
 
 #endif

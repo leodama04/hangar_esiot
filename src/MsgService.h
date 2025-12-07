@@ -23,30 +23,24 @@ public:
 
 class MsgServiceClass {
 
-public: 
-  
-  Msg* currentMsg;
-  bool msgAvailable;
-
-  void init();  
-
+private:
   bool isMsgAvailable();
   Msg* receiveMsg();
-
   bool isMsgAvailable(Pattern& pattern);
   Msg* receiveMsg(Pattern& pattern);
-  
-
   void sendMsg(const String& msg);
-
+public:
+  Msg* currentMsg;
+  bool msgAvailable;
   
+  void init();  
   void handleMessage();
-
   void sendMsgTAKINGOFF();
   void sendMsgLANDING();
   void sendMsgOUTSIDE();
   void sendMsgINSIDE();
   void sendMsgRESET();
+  void sendDistance(float dist);
 };
 
 extern MsgServiceClass MsgService;

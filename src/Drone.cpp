@@ -1,15 +1,10 @@
 #include "Drone.h"
 #include "MsgService.h"
 
-// Simple concrete implementation for `Drone` declared in `Drone.h`.
-// This file provides method definitions and a global `drone` instance
-// so other modules can use the class without further changes.
-
-// Initialize members with sensible defaults
 Drone::Drone() {
-    requestTakeoff = false;
-    requestLanding = false;
-    currentState = INSIDE;
+  requestTakeoff = false;
+  requestLanding = false;
+  currentState = INSIDE;
 }
 
 void Drone::setDroneINSIDE(){

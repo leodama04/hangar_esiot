@@ -89,7 +89,7 @@ class DRUGUI:
     def wait_for_ready(self):
         """Attende il messaggio READY da Arduino prima di abilitare i controlli"""
         start_time = time.time()
-        while self.running and time.time() - start_time < 5:  # Timeout di 5 secondi
+        while self.running and time.time() - start_time < 15:  # Timeout di 15 secondi
             try:
                 if self.serial_conn.in_waiting:
                     line = self.serial_conn.readline().decode('utf-8').strip()
@@ -175,6 +175,13 @@ class DRUGUI:
             self.alarm_state_var.set("NORMAL")
             self.set_controls_state(True)
             self.log_message("Sistema resettato, hangar state ritornato a NORMAL")
+
+        elif msg.startswith("DISTANCE:"):
+            try:
+                distance = msg.split(":")[1].strip().upper();
+                self.distance_var.set(distance);
+            except Exception as e:
+                self.log_message(f"Errore parsing DISTANCE: {e}")
 
     def log_message(self, text):
         self.log.configure(state='normal')
