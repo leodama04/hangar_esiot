@@ -20,6 +20,7 @@ void TakeOffTask::tick(){
     case WAITING_MSG: {
       MsgService.handleMessage();
       if(drone.isRequestTakeOffSent()) {
+        blinkingTask.setActive(true);
         drone.consumeRequestTakeOff();
         hangarDoor.open();
         drone.setDroneTAKINGOFF();
@@ -55,7 +56,6 @@ void TakeOffTask::tick(){
         break;
       }
       if(timerRunning && millis() - tStart > T1) {
-        drone.setDroneOUTSIDE();
         hangarDoor.close();
         timerRunning = false;
         state = WAITING_DOOR_TO_CLOSE;
@@ -65,6 +65,8 @@ void TakeOffTask::tick(){
     case WAITING_DOOR_TO_CLOSE: {
       hangarDoor.update();
       if(hangarDoor.isClosed()) {
+        blinkingTask.setActive(false);
+        drone.setDroneOUTSIDE();
         state = WAITING_MSG;
       }
       break;

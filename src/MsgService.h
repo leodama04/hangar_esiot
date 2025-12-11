@@ -40,7 +40,11 @@ public:
   void sendMsgOUTSIDE();
   void sendMsgINSIDE();
   void sendMsgRESET();
+  void sendMsgALARM();
+  void sendMsgDRUALARM();
+  void sendMsgPREALARM();
   void sendDistance(float dist);
+  void sendTemp(float temp);
 };
 
 extern MsgServiceClass MsgService;

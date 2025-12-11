@@ -86,8 +86,24 @@ void MsgServiceClass::sendMsgRESET() {
   Serial.println("RESET");
 }
 
+void MsgServiceClass::sendMsgALARM() {
+  Serial.println("ALARM");
+}
+
+void MsgServiceClass::sendMsgDRUALARM() {
+  Serial.println("IL SISTEMA E IN STATO DI ALLARME");
+}
+
+void MsgServiceClass::sendMsgPREALARM() {
+  Serial.println("PREALARM");
+}
+
 void MsgServiceClass::sendDistance(float dist) {
   Serial.println("DISTANCE: " + String(dist));
+}
+
+void MsgServiceClass::sendTemp(float temp) {
+  Serial.println("TEMP: " + String(temp));
 }
 
 enum Command { CMD_TAKEOFF, CMD_LAND, CMD_UNKNOWN };

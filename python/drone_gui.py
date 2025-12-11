@@ -33,8 +33,6 @@ class DRUGUI:
         # Stati visualizzati
         labels = [
             ("Stato Drone:", "drone_state_var"),
-            ("Stato Hangar:", "hangar_state_var"),
-            ("Stato Porta:", "door_state_var"),
             ("Temperatura (°C):", "temp_var"),
             ("Distanza da terra (m):", "distance_var"),
             ("Allarme:", "alarm_state_var"),
@@ -157,7 +155,6 @@ class DRUGUI:
         self.root.after(100, self.process_queue)
 
     def handle_message(self, msg):
-        self.log_message("Arduino: " + msg)
 
         if msg.startswith("DRONE STATE:"):
             # Parse drone state: "DRONE STATE: TAKING_OFF", "DRONE STATE: REST", etc.
@@ -182,6 +179,28 @@ class DRUGUI:
                 self.distance_var.set(distance);
             except Exception as e:
                 self.log_message(f"Errore parsing DISTANCE: {e}")
+
+        elif msg.startswith("TEMP:"):
+            try:
+                temp = msg.split(":")[1].strip().upper();
+                self.temp_var.set(temp);
+            except Exception as e:
+                self.log_message(f"Errore parsing DISTANCE: {e}")
+        
+        elif msg.startswith("PREALARM"):
+            self.pre_alarm = True;
+            self.alarm_state_var.set("PRE-ALARM")
+            self.log_message("Sistema in stato di pre-allarme")
+        
+        elif msg.startswith("ALARM"):
+            self.alarm = True;
+            self.alarm_state_var.set("ALARM")
+            self.log_message("Sistema in stato di allarme")
+
+        else:
+            self.log_message("Arduino: " + msg)
+
+
 
     def log_message(self, text):
         self.log.configure(state='normal')

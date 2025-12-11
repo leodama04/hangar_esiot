@@ -27,6 +27,7 @@ void LandingTask::tick() {
         }
         case DETECTING_DRONE: {
             if(DPD->isDetected()) {
+                blinkingTask.setActive(true);
                 hangarDoor.open();
                 drone.setDroneLANDING();
                 state = WAITING_DOOR_TO_OPEN;
@@ -61,7 +62,6 @@ void LandingTask::tick() {
                 break;
             }
             if(timerRunning && millis() - tStart > T2) {
-                drone.setDroneINSIDE();
                 hangarDoor.close();
                 timerRunning = false;
                 state = WAITING_DOOR_TO_CLOSE;
@@ -71,6 +71,8 @@ void LandingTask::tick() {
         case WAITING_DOOR_TO_CLOSE: {
             hangarDoor.update();
             if(hangarDoor.isClosed()) {
+                blinkingTask.setActive(false);
+                drone.setDroneINSIDE();
                 state = WAITING_MSG;
             }
             break;
