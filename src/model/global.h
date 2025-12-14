@@ -3,12 +3,11 @@
 
 #include "Drone.h"
 #include "HangarDoor.h"
-#include "MsgService.h"
+#include "kernel/MsgService.h"
 #include "devices/ProximitySensor.h"
 #include "devices/Sonar.h"
 #include "devices/PresenceSensor.h"
 #include "devices/Pir.h"
-#include "devices/LedPwm.h"
 #include "devices/Led.h"
 #include "devices/TempSensorTMP.h"
 #include "devices/TempSensor.h"
@@ -17,6 +16,8 @@
 #include "tasks/BlinkingTask.h"
 #include "tasks/TakeOffTask.h"
 #include "tasks/LandingTask.h"
+#include "LiquidCrystal_I2C.h"
+
 
 #define MOT_PIN 9
 #define ECHO_PIN 7
@@ -32,7 +33,7 @@ extern Drone drone;
 extern HangarDoor hangarDoor;
 extern ProximitySensor* DDD;
 extern PresenceSensor* DPD;
-extern LedPwm* L2;
+extern Led* L2;
 extern Led* L1;
 extern Led* L3;
 extern BlinkingTask blinkingTask;
@@ -40,7 +41,7 @@ extern LandingTask landingTask;
 extern TakeOffTask takeOffTask;
 extern TempSensor* tempSensor;
 extern Button* button;
-
+extern LiquidCrystal_I2C lcd;   
 
 void globalSetup();
 

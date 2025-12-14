@@ -1,5 +1,5 @@
 #include "tasks/AlarmTask.h"
-#include "global.h"
+#include "model/global.h"
 
 #define Temp1 24.5
 #define T3 10000
@@ -99,6 +99,8 @@ void AlarmTask::tick() {
                     MsgService.sendMsgDRUALARM();
                 }
                 if(hangarDoor.isClosed()) {
+                    lcd.clear();
+                    lcd.print("ALARM");
                     MsgService.sendMsgALARM();
                     L3->switchOn();
                     state = ALARM;
@@ -115,6 +117,8 @@ void AlarmTask::tick() {
         case WAITING_DOOR_TO_CLOSE: {
             hangarDoor.update();
             if(hangarDoor.isClosed()) {
+                lcd.clear();
+                lcd.print("ALARM");
                 MsgService.sendMsgALARM();
                 L3->switchOn();
                 state = ALARM;
@@ -126,6 +130,14 @@ void AlarmTask::tick() {
                 landingTask.setActive(true);
                 takeOffTask.setActive(true);
                 MsgService.sendMsgRESET();
+                if(drone.isDroneINSIDE()) {
+                    lcd.clear();
+                    lcd.print("DRONE INSIDE");  
+                }
+                else {
+                    lcd.clear();
+                    lcd.print("DRONE OUT");  
+                }
                 L3->switchOff();
                 state = NORMAL_STATE;
             }

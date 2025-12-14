@@ -1,7 +1,7 @@
 #ifndef __LANDINGTASK__
 #define __LANDINGTASK__
 
-#include "Task.h"
+#include "kernel/Task.h"
 
 class LandingTask : public Task {
 public:

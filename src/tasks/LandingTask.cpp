@@ -1,7 +1,7 @@
 #include "tasks/LandingTask.h"
-#include "HangarDoor.h"
-#include "MsgService.h"
-#include "global.h"
+#include "model/HangarDoor.h"
+#include "kernel/MsgService.h"
+#include "model/global.h"
 
 #define D2 0.10
 #define T2 5000
@@ -27,6 +27,8 @@ void LandingTask::tick() {
         }
         case DETECTING_DRONE: {
             if(DPD->isDetected()) {
+                lcd.clear();
+                lcd.print("LANDING");
                 blinkingTask.setActive(true);
                 hangarDoor.open();
                 drone.setDroneLANDING();
@@ -71,6 +73,9 @@ void LandingTask::tick() {
         case WAITING_DOOR_TO_CLOSE: {
             hangarDoor.update();
             if(hangarDoor.isClosed()) {
+                lcd.clear();
+                lcd.print("DRONE INSIDE");
+                L1->switchOn();
                 blinkingTask.setActive(false);
                 drone.setDroneINSIDE();
                 state = WAITING_MSG;

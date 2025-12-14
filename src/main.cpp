@@ -1,6 +1,6 @@
 #include <Arduino.h>
 #include "Scheduler.h"
-#include "global.h"
+#include "model/global.h"
 #include "tasks/LandingTask.h"
 #include "tasks/TakeOffTask.h"
 #include "tasks/AlarmTask.h"
@@ -11,7 +11,7 @@ AlarmTask alarmTask;
 void setup() {
   globalSetup();
   alarmTask.init(100);
-  scheduler.init(5);
+  scheduler.init(100);
   scheduler.addTask(&takeOffTask);
   scheduler.addTask(&landingTask);
   scheduler.addTask(&blinkingTask);

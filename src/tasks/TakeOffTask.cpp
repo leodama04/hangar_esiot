@@ -1,7 +1,7 @@
 #include "tasks/TakeOffTask.h"
-#include "HangarDoor.h"
-#include "MsgService.h"
-#include "global.h"
+#include "model/HangarDoor.h"
+#include "kernel/MsgService.h"
+#include "model/global.h"
 
 #define D1 0.25
 #define T1 10000
@@ -20,6 +20,8 @@ void TakeOffTask::tick(){
     case WAITING_MSG: {
       MsgService.handleMessage();
       if(drone.isRequestTakeOffSent()) {
+        lcd.clear();
+        lcd.print("TAKE OFF");
         blinkingTask.setActive(true);
         drone.consumeRequestTakeOff();
         hangarDoor.open();
@@ -65,6 +67,9 @@ void TakeOffTask::tick(){
     case WAITING_DOOR_TO_CLOSE: {
       hangarDoor.update();
       if(hangarDoor.isClosed()) {
+        L1->switchOff();
+        lcd.clear();
+        lcd.print("DRONE OUT");
         blinkingTask.setActive(false);
         drone.setDroneOUTSIDE();
         state = WAITING_MSG;

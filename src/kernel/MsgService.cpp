@@ -1,6 +1,6 @@
 #include "Arduino.h"
 #include "MsgService.h"
-#include "global.h"
+#include "model/global.h"
 
 String content;
 MsgServiceClass MsgService;

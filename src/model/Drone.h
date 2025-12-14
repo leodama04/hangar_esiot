@@ -1,13 +1,8 @@
 #ifndef __DRONE__
 #define __DRONE__
 
-#include "DroneState.h"
 
 class Drone {
-    volatile bool requestTakeoff;
-    volatile bool requestLanding;
-    DroneState currentState;
-
 public:
     Drone();
     void setDroneLANDING();
@@ -24,6 +19,14 @@ public:
     void sendRequestLanding();
     bool isRequestLandingSent();
     void consumeRequestLanding();
+
+private:
+    enum DroneState { INSIDE, OUTSIDE, LANDING, TAKING_OFF };
+    DroneState currentState;
+    volatile bool requestTakeoff;
+    volatile bool requestLanding;
+
+
 };
 
 

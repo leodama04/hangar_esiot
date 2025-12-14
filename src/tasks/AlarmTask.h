@@ -1,7 +1,7 @@
 #ifndef __ALARMTASK__
 #define __ALARMTASK__
 
-#include "Task.h"
+#include "kernel/Task.h"
 
 class AlarmTask : public Task {
 public:
